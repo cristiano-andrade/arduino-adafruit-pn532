@@ -14,7 +14,7 @@ bool mgos_arduino_adafruit_pn532_readPassiveTargetID(Adafruit_PN532 * htu,
                                                      uint8_t cardbaudrate,
                                                      uint8_t * uid,
                                                      uint8_t * uidLength,
-                                                     uint16_t timeout = 0)
+                                                     uint16_t timeout = 0);
 
 #ifdef __cplusplus
 }
