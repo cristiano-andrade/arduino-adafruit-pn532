@@ -10,6 +10,11 @@ extern "C" {
 Adafruit_PN532 *mgos_arduino_adafruit_pn532_create(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss);
 int mgos_arduino_adafruit_pn532_begin(Adafruit_PN532 *htu);
 int mgos_arduino_adafruit_pn532_getFirmwareVersion(Adafruit_PN532 *htu);
+bool mgos_arduino_adafruit_pn532_readPassiveTargetID(Adafruit_PN532 * htu,
+                                                     uint8_t cardbaudrate,
+                                                     uint8_t * uid,
+                                                     uint8_t * uidLength,
+                                                     optional int timeout = 0)
 
 #ifdef __cplusplus
 }
