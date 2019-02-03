@@ -73,3 +73,13 @@ uint8_t mgos_arduino_adafruit_pn532_ntag2xx_WriteNDEFURI(Adafruit_PN532 * nfc,
 
    return response;
 }
+
+bool mgos_arduino_adafruit_pn532_SAMConfig(Adafruit_PN532 *nfc) {
+  bool success = false;
+
+  if (nfc != nullptr) {
+    success =  nfc->SAMConfig();
+  }
+
+  return success;
+}
