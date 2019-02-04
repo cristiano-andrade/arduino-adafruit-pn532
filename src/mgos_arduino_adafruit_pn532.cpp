@@ -4,6 +4,10 @@ Adafruit_PN532 *mgos_arduino_adafruit_pn532_create(uint8_t clk, uint8_t miso, ui
     return new Adafruit_PN532(clk, miso, mosi, ss);
 }
 
+Adafruit_PN532 *mgos_arduino_adafruit_pn532_create(uint8_t irq, uint8_t reset) {
+    return new Adafruit_PN532(irq, reset);
+}
+
 int mgos_arduino_adafruit_pn532_begin(Adafruit_PN532 * nfc) {
     if (nfc == nullptr) return 0;
     nfc->begin();
