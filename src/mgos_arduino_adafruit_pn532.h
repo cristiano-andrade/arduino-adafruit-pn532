@@ -11,7 +11,7 @@ Adafruit_PN532 *mgos_arduino_adafruit_pn532_create_spi(uint8_t clk, uint8_t miso
 Adafruit_PN532 *mgos_arduino_adafruit_pn532_create_i2c(uint8_t irq, uint8_t reset);
 int mgos_arduino_adafruit_pn532_begin(Adafruit_PN532 *nfc);
 int mgos_arduino_adafruit_pn532_getFirmwareVersion(Adafruit_PN532 *nfc);
-int mgos_arduino_adafruit_pn532_readPassiveTargetID(Adafruit_PN532 * nfc,
+bool mgos_arduino_adafruit_pn532_readPassiveTargetID(Adafruit_PN532 * nfc,
                                                      uint8_t cardbaudrate,
                                                      uint8_t * uid,
                                                      uint8_t * uidLength,
