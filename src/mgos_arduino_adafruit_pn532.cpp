@@ -1,10 +1,10 @@
 #include <mgos_arduino_adafruit_pn532.h>
 
-Adafruit_PN532 *mgos_arduino_adafruit_pn532_create(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss) {
+Adafruit_PN532 *mgos_arduino_adafruit_pn532_create_spi(uint8_t clk, uint8_t miso, uint8_t mosi, uint8_t ss) {
     return new Adafruit_PN532(clk, miso, mosi, ss);
 }
 
-Adafruit_PN532 *mgos_arduino_adafruit_pn532_create(uint8_t irq, uint8_t reset) {
+Adafruit_PN532 *mgos_arduino_adafruit_pn532_create_i2c(uint8_t irq, uint8_t reset) {
     return new Adafruit_PN532(irq, reset);
 }
 
