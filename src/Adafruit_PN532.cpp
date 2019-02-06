@@ -226,7 +226,7 @@ void Adafruit_PN532::begin() {
   }
   else {
     // I2C initialization.
-    WIRE.begin();
+    WIRE.begin(_irq,_reset);
 
     // Reset the PN532
     digitalWrite(_reset, HIGH);
@@ -355,7 +355,7 @@ uint32_t Adafruit_PN532::getFirmwareVersion(void) {
 /**************************************************************************/
 // default timeout of one second
 bool Adafruit_PN532::sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t timeout) {
-  
+
   // write the command
   writecommand(cmd, cmdlen);
 
