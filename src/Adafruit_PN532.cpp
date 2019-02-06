@@ -226,8 +226,7 @@ void Adafruit_PN532::begin() {
   }
   else {
     // I2C initialization.
-    WIRE.begin(&_irq,&_reset);
-
+    Wire.begin(_irq,_reset);
     // Reset the PN532
     digitalWrite(_reset, HIGH);
     digitalWrite(_reset, LOW);
