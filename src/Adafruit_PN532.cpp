@@ -69,7 +69,8 @@ byte pn532ack[] = {0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00};
 byte pn532response_firmwarevers[] = {0x00, 0xFF, 0x06, 0xFA, 0xD5, 0x03};
 
 // Uncomment these lines to enable debug output for PN532(SPI) and/or MIFARE related code
-// #define PN532DEBUG
+
+#define PN532DEBUG
 // #define MIFAREDEBUG
 
 // If using Native Port on Arduino Zero or Due define as SerialUSB
@@ -370,7 +371,7 @@ bool Adafruit_PN532::sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t 
   // read acknowledgement
   if (!readack()) {
     #ifdef PN532DEBUG
-      printf("No ACK frame received!");
+      LOG(LL_INFO,("No ACK frame received!"));
     #endif
     return false;
   }
@@ -488,7 +489,7 @@ uint8_t Adafruit_PN532::readGPIO(void) {
         //PN532DEBUGPRINT.println(F("Using UART (IO = 0x00)"));
         break;
       case 0x01:    // Using I2C
-        printf("Using I2C (IO = 0x01)");
+        LOG(LL_INFO,("Using I2C (IO = 0x01)"));
         break;
       case 0x02:    // Using SPI
         printf("Using SPI (IO = 0x02)");
@@ -570,7 +571,7 @@ bool Adafruit_PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t * uid, ui
   if (!sendCommandCheckAck(pn532_packetbuffer, 3, timeout))
   {
     #ifdef PN532DEBUG
-      printf("No card(s) read");
+      LOG(LL_INFO,("No card(s) read"));
     #endif
     return 0x0;  // no cards read
   }
