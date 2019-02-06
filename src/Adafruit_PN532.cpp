@@ -226,14 +226,12 @@ void Adafruit_PN532::begin() {
   }
   else {
     // I2C initialization.
-    Wire.begin();
+    WIRE.begin();
     // Reset the PN532
-    digitalWrite(_reset, HIGH);
-    digitalWrite(_reset, LOW);
-    delay(400);
-    digitalWrite(_reset, HIGH);
-    delay(10);  // Small delay required before taking other actions after reset.
-                // See timing diagram on page 209 of the datasheet, section 12.23.
+    Wire.beginTransmission(PN532_I2C_ADDRESS);
+    Wire.write(0x0);
+    Wire.write(0x0);
+    Wire.endTransmission();
   }
 }
 
@@ -372,7 +370,7 @@ bool Adafruit_PN532::sendCommandCheckAck(uint8_t *cmd, uint8_t cmdlen, uint16_t 
   // read acknowledgement
   if (!readack()) {
     #ifdef PN532DEBUG
-      //PN532DEBUGPRINT.println(F("No ACK frame received!"));
+      printf("No ACK frame received!");
     #endif
     return false;
   }
@@ -490,10 +488,10 @@ uint8_t Adafruit_PN532::readGPIO(void) {
         //PN532DEBUGPRINT.println(F("Using UART (IO = 0x00)"));
         break;
       case 0x01:    // Using I2C
-        //PN532DEBUGPRINT.println(F("Using I2C (IO = 0x01)"));
+        printf("Using I2C (IO = 0x01)");
         break;
       case 0x02:    // Using SPI
-        //PN532DEBUGPRINT.println(F("Using SPI (IO = 0x02)"));
+        printf("Using SPI (IO = 0x02)");
         break;
     }
   #endif
@@ -572,7 +570,7 @@ bool Adafruit_PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t * uid, ui
   if (!sendCommandCheckAck(pn532_packetbuffer, 3, timeout))
   {
     #ifdef PN532DEBUG
-      //PN532DEBUGPRINT.println(F("No card(s) read"));
+      printf("No card(s) read");
     #endif
     return 0x0;  // no cards read
   }
@@ -580,11 +578,11 @@ bool Adafruit_PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t * uid, ui
   // wait for a card to enter the field (only possible with I2C)
   if (!_usingSPI) {
     #ifdef PN532DEBUG
-      //PN532DEBUGPRINT.println(F("Waiting for IRQ (indicates card presence)"));
+      printf("Waiting for IRQ (indicates card presence)");
     #endif
     if (!waitready(timeout)) {
       #ifdef PN532DEBUG
-        //PN532DEBUGPRINT.println(F("IRQ Timeout"));
+       printf("IRQ Timeout");
       #endif
       return 0x0;
     }
@@ -607,7 +605,8 @@ bool Adafruit_PN532::readPassiveTargetID(uint8_t cardbaudrate, uint8_t * uid, ui
     b13..NFCIDLen   NFCID                                      */
 
   #ifdef MIFAREDEBUG
-    //PN532DEBUGPRINT.print(F("Found ")); PN532DEBUGPRINT.print(pn532_packetbuffer[7], DEC); PN532DEBUGPRINT.println(F(" tags"));
+    printf("Found "); 
+    //PN532DEBUGPRINT.print(pn532_packetbuffer[7], DEC); PN532DEBUGPRINT.println(F(" tags"));
   #endif
   if (pn532_packetbuffer[7] != 1)
     return 0;
